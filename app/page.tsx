@@ -7,14 +7,12 @@ export default function Page() {
   const plugins = getRegisteredPlugins();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [modalImages, setModalImages] = useState<string[]>([]); // Set default as an empty array
+  const [modalImages, setModalImages] = useState<string[]>([]);
 
   const openModal = (images: string[], index: number) => {
-    if (images && images.length > 0) {  // Ensure images array is valid
-      setModalImages(images);
-      setCurrentImageIndex(index);
-      setIsModalOpen(true);
-    }
+    setModalImages(images);
+    setCurrentImageIndex(index);
+    setIsModalOpen(true);
   };
 
   const closeModal = () => setIsModalOpen(false);
@@ -49,7 +47,7 @@ export default function Page() {
                           "https://www.kgkgroup.com/wp-content/uploads/2017/03/L-to-R-Mr-Sanjay-Kothari-Mr-Navrattan-Kothari-Ms-Vanya-Mishra-Mr-Rajpurohit-Mr-Sandeep-Kothari.jpg",
                           "https://www.kgkgroup.com/wp-content/uploads/2017/03/Ms-Varda-Shine-Lighting-the-lamp.jpg",
                           "https://www.kgkgroup.com/wp-content/uploads/2017/03/1KGK-Chairman-Mr-Navrattan-Kothari-with-Hon-Kitso-Mokaila-Minister-of-Minerals-Energy-and-Water-Resources-Botwana.jpg"
-                        ], index)} // Open modal with clicked image
+                        ], index)} 
                       />
                     </div>
                   ))}
@@ -62,7 +60,6 @@ export default function Page() {
         </>
       )}
 
-      {/* Modal */}
       {isModalOpen && modalImages.length > 0 && (
         <div className="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center z-50">
           <button
