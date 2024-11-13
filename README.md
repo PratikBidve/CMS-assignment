@@ -21,12 +21,7 @@ This CMS application is built with **Next.js** and provides a WYSIWYG editor for
 
 To run this project locally:
 
-```bash
-npm install
-npm run dev
-```
-
-If using docker simply run in the termnial : `docker compose up --build`
+Using docker simply run in the termnial : `docker compose up --build`
 
 Once this is done you can visit the 
 
@@ -209,30 +204,6 @@ Set up continuous deployment to trigger new builds upon each commit. This ensure
 --- 
 
 This documentation covers setup, usage, and deployment details for the CMS, ensuring new developers can get started efficiently. 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
