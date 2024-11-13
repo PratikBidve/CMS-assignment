@@ -44,6 +44,8 @@ Then, open [http://localhost:3000] in your browser to view the app.
 The CMS uses PostgreSQL for data storage. Use the following SQL commands to create the required tables, 
 or run the `docker compose up --build` command to initialize the database with these tables automatically:
 
+after building the project you can run  `docker compose up` for a second time.
+
 ```sql
 CREATE TABLE Post (
   id SERIAL PRIMARY KEY,
