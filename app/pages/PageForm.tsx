@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState } from 'react';
-import dynamic from 'next/dynamic';
+import React, { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 
 // Dynamically import the TinyMCE editor component for client-side only
-const Editor = dynamic(() => import('@tinymce/tinymce-react').then((mod) => mod.Editor as any), {
+const Editor = dynamic(() => import("@tinymce/tinymce-react").then((mod) => mod.Editor as any), {
   ssr: false,
 });
 
@@ -15,19 +15,24 @@ interface PageFormProps {
 }
 
 const PageForm: React.FC<PageFormProps> = ({ onSubmit, initialData, mode }) => {
-  const [title, setTitle] = useState(initialData?.title || '');
-  const [slug, setSlug] = useState(initialData?.slug || '');
-  const [content, setContent] = useState(initialData?.content || '');
+  const [title, setTitle] = useState(initialData?.title || "");
+  const [slug, setSlug] = useState(initialData?.slug || "");
+  const [content, setContent] = useState(initialData?.content || "");
   const [isPreview, setIsPreview] = useState(false);
+
+  useEffect(() => {
+    // Synchronize content state with initial data
+    setTitle(initialData?.title || "");
+    setSlug(initialData?.slug || "");
+    setContent(initialData?.content || "");
+  }, [initialData]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit({ title, slug, content });
   };
 
-  const togglePreview = () => {
-    setIsPreview((prev) => !prev);
-  };
+  const togglePreview = () => setIsPreview((prev) => !prev);
 
   return (
     <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-md">
@@ -47,7 +52,9 @@ const PageForm: React.FC<PageFormProps> = ({ onSubmit, initialData, mode }) => {
         // Preview Mode Content
         <div className="preview border p-4 rounded-md">
           <h1 className="text-2xl font-bold mb-2">{title}</h1>
-          <p className="text-gray-600 mb-2"><em>Slug: {slug}</em></p>
+          <p className="text-gray-600 mb-2">
+            <em>Slug: {slug}</em>
+          </p>
           <div
             className="content-preview text-gray-800"
             dangerouslySetInnerHTML={{ __html: content }}
@@ -63,7 +70,7 @@ const PageForm: React.FC<PageFormProps> = ({ onSubmit, initialData, mode }) => {
               value={title}
               onChange={(e) => {
                 setTitle(e.target.value);
-                setSlug(e.target.value.toLowerCase().replace(/\s+/g, '-'));
+                setSlug(e.target.value.toLowerCase().replace(/\s+/g, "-"));
               }}
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-blue-600"
               required
@@ -84,22 +91,22 @@ const PageForm: React.FC<PageFormProps> = ({ onSubmit, initialData, mode }) => {
           <div className="mb-6">
             <label className="block text-blue-600 font-medium mb-2">Content</label>
             <Editor
-              apiKey="xr2uk08q7hrr3cn2uylrrot6f8cadx5x5iqbilwsjjworpjr"  // TinyMCE API key
-              initialValue={content}
+              apiKey="xr2uk08q7hrr3cn2uylrrot6f8cadx5x5iqbilwsjjworpjr" // TinyMCE API key
+              value={content} // Bind the editor's value to the content state
+              onEditorChange={(newContent: string) => setContent(newContent)} // Sync the editor changes to state
               init={{
                 height: 300,
                 menubar: false,
                 plugins: [
-                  'advlist autolink lists link image charmap print preview anchor',
-                  'searchreplace visualblocks code fullscreen',
-                  'insertdatetime media table paste code help wordcount'
+                  "advlist autolink lists link image charmap print preview anchor",
+                  "searchreplace visualblocks code fullscreen",
+                  "insertdatetime media table paste code help wordcount",
                 ],
                 toolbar:
-                  'undo redo | formatselect | bold italic backcolor | \
+                  "undo redo | formatselect | bold italic backcolor | \
                   alignleft aligncenter alignright alignjustify | \
-                  bullist numlist outdent indent | removeformat | help'
+                  bullist numlist outdent indent | removeformat | help",
               }}
-              onEditorChange={(newContent: string) => setContent(newContent)}
             />
           </div>
 
